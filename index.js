@@ -23,8 +23,9 @@ const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const uri = process.env.MONGO_CONNECTION_STRING;
 
-mongoose.connect(`mongodb+srv://rperlinski:${process.env.DB_PASS}@atlascluster.6jvcgd7.mongodb.net/rperlinski?retryWrites=true&w=majority`, function(err) {
+mongoose.connect(uri, function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
@@ -33,7 +34,7 @@ mongoose.connect(`mongodb+srv://rperlinski:${process.env.DB_PASS}@atlascluster.6
 });
 
 
-const jwt_key = "myVerySecretPassword";
+const jwt_key = process.env.JWT_KEY;
 
 const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
