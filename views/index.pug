@@ -1,0 +1,172 @@
+doctype html
+html(lang="pl")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    // Bootstrap CSS
+    link(
+      rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    )
+    title= title
+  body
+    nav(class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="breadcrumb")
+      a(class="nav-link active" href="https://lab01app.herokuapp.com/") lab01app.herokuapp.com
+      div(class="collapse navbar-collapse" id="navbarNav")
+        ul(class="navbar-nav")
+          li(class="nav-item")
+            a(class="nav-link" href="https://www.w3schools.com/js/js_ajax_intro.asp") AJAX Totorial
+          li(class="nav-item")
+            a(class="nav-link" href="http://api.jquery.com/") jQuery
+          li(class="nav-item")
+            a(class="nav-link" href="http://pcz.pl/") Politechnika Częstochowska
+          li(class="nav-item")
+            a(class="nav-link" href="http://rperlinski.pl/") rperlinski-strona uczelniana
+    div(class="jumbotron")
+      h1(class="display-4") REST API
+      p(class="lead")
+        | Proste REST API do ćwiczeń z przedmiotu <strong>Tworzenie serwisów Web 2.0</strong>
+        | z wykorzystaniem Node.js (Express.js), MongoDB i mongoose.
+        | Dostępne są dwie kolekcje:
+        ul
+          li
+            <mark>users</mark>, której elementy można pobierać, dodawać, usuwać i nadpisywać bez potrzeby uwierzytelnienia,
+          li
+            <mark>cars</mark>, której elementy można pobierać, dodawać, usuwać i nadpisywać, ale trzeba się uwierzytelnić
+            |  przesyłając w nagłówku żadania HTTP odpowiedni token.
+      p W metodach POST, PUT i DELETE protokołu HTTP używamy nagłówka <strong>Content-Type</strong>
+        |  z wartością <strong>application/JSON</strong>.
+      p Do obsługi kolekcji <mark>cars</mark> używamy tokenu, który przesyłamy w nagłówku
+        |  <strong>Authorization</strong>, którego wartość to
+        strong= " Bearer <token>"
+        | .
+      p Jeśli token byłby następujący: <mark>eyKhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJwZXJsaW5za2lAZ21haWwuY29tIiwidXNlcklkIjoiNjIxMTVmYmZhNDIyYjRmMjdhYWQ1MDM0IiwiaWF0IjoxNjQ1MzA2MTIxLCJleHAiOjE2NDUzMTE1MjF9.d3yflN-8n2ndoRFTDwEcun1jRjqYnYOVwGO_Ixc_rEo</mark>,
+        |  to całość wartości nagłówka Authorization była by następująca:<br>
+        <mark>Bearer eyKhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJwZXJsaW5za2lAZ21haWwuY29tIiwidXNlcklkIjoiNjIxMTVmYmZhNDIyYjRmMjdhYWQ1MDM0IiwiaWF0IjoxNjQ1MzA2MTIxLCJleHAiOjE2NDUzMTE1MjF9.d3yflN-8n2ndoRFTDwEcun1jRjqYnYOVwGO_Ixc_rEo</mark>
+    main(role="main" class="container")
+      article(class="mb-5")
+        h3 Kolekcja <em>users</em>
+        table(class="table table-bordered table-hover")
+          thead(class="thead-dark")
+            tr
+              th Resource (URI)
+              th GET (read)
+              th POST (create)
+              th PUT (update)
+              th DELETE (destroy)
+          tr
+            td users
+            td dane wszystkich użytkowników
+            td tworzenie nowego użytkownika
+            td(align="center") ---
+            td(align="center") ---
+          tr
+            td users/:id
+            td dane użytkownika o ID
+            td(align="center") --- 
+            td aktualizacja użytkownika o ID
+            td usuwanie użytkownika o ID
+        h3 Kolekcja <em>cars</em>
+        table(class="table table-bordered table-hover")
+          thead(class="thead-dark")
+            tr
+              th Resource (URI)
+              th GET (read)
+              th POST (create)
+              th PUT (update)
+              th DELETE (destroy)
+          tr
+            td cars
+            td dane wszystkich samochodów
+            td dodawanie samochodu
+            td(align="center") --- 
+            td(align="center") ---
+          tr
+            td cars/:id
+            td dane samochodu o ID
+            td(align="center") ---
+            td aktualizacja samochodu o ID
+            td usuwanie samochodu o ID
+        h3 Rejestracja i logowanie
+        table(class="table table-bordered table-hover")
+          thead(class="thead-dark")
+            tr
+              th Resource (URI)
+              th POST (create)
+          tr
+            td signup
+            td Rejestracja użytkownika o podanym adresie email i haśle
+          tr
+            td login
+            td Logowanie użytkownika o podanym adresie email i haśle. Zwraca token, który umożliwaia dostęp do kolekcji <mark>cars</mark>.
+        p Dokumenty kolekcji <mark>users</mark> posiadają trzy pola: name, surname, age (domyślnie 21). Przykładowy dokument JSON:
+          pre
+            code
+              | {
+              |   "name":"Zofia",
+              |   "surname":"Skowrońska",
+              |   "age": 22
+              | }
+        p Dokumenty kolekcji <mark>cars</mark> są w zasadzie takie same, posiadają trzy pola: brand, model, year (domyślnie 2022).
+          |  Przykładowy dokument JSON:
+          pre
+            code
+              | {
+              |   "brand":"Seat",
+              |   "model":"Ibiza",
+              |   "year": 2017
+              | }
+        p Dokumenty JSON przesyłane w ciele żądania służące do rejestracji i logowania mają dwa pola: email, password.
+          |  Przykładowy dokument JSON:
+          pre
+            code
+              | {
+              |   "email":"jan358@xyz.pl",
+              |   "password":"mojeTajneHaslo358"
+              | }
+        h3 Przykładowe adresy z metodami protokołi HTTP
+        p
+          a(href="https://lab01app.herokuapp.com/users") https://lab01app.herokuapp.com/users
+          |  (metoda GET)
+        p
+          a(href="https://lab01app.herokuapp.com/users/603393d5526e0347b4c7c092") https://lab01app.herokuapp.com/users/603393d5526e0347b4c7c092
+          |  (metoda GET, adres może być już nieaktualny, bo ktoś usunął danego użytkownika)
+        p
+          a https://lab01app.herokuapp.com/users/603393d5526e0347b4c7c092
+          |  (metoda PUT, adres może być już nieaktualny, bo ktoś usunął danego użytkownika, trzeba skorzysatć z klienta REST)
+        hr
+        p
+          a https://lab01app.herokuapp.com/signup
+          |  (metoda POST, trzeba skorzysatć z klienta REST)
+        p
+          a https://lab01app.herokuapp.com/login
+          |  (metoda POST, trzeba skorzysatć z klienta REST)
+        hr
+        p
+          a(href="https://lab01app.herokuapp.com/cars") https://lab01app.herokuapp.com/cars
+          |  (metoda GET, wymaga przesłania tokenu w nagłówku protokolu HTTP, trzeba skorzysatć z klienta REST)
+        p
+          a(href="https://lab01app.herokuapp.com/cars/6211442263145d702c98e0b0") https://lab01app.herokuapp.com/cars/6211442263145d702c98e0b0
+          |  (metoda GET, wymaga przesłania tokenu w nagłówku protokolu HTTP, trzeba skorzysatć z klienta REST, adres może być już nieaktualny, bo ktoś usunął dany samochód)
+        p
+          a https://lab01app.herokuapp.com/cars/6211442263145d702c98e0b0
+          |  (metoda DELETE, wymaga przesłania tokenu w nagłówku protokolu HTTP, trzeba skorzysatć z klienta REST, adres może być już nieaktualny, bo ktoś usunął dany samochód)
+    footer(class="footer fixed-bottom bg-dark")
+      div(class="container text-center")
+        span(class="text-muted") Copyright &copy; 2022 by Robert Perliński
+    script(
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    )
+    script(
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    )
