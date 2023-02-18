@@ -24,8 +24,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
-// mongodb+srv://rperlinski:<password>@atlascluster.6jvcgd7.mongodb.net/test
-mongoose.connect('mongodb+srv://rperlinski:NjjfC1ylt6RMRA2o@atlascluster.6jvcgd7.mongodb.net/rperlinski?retryWrites=true&w=majority', function(err) {
+mongoose.connect(`mongodb+srv://rperlinski:${process.env.DB_PASS}@atlascluster.6jvcgd7.mongodb.net/rperlinski?retryWrites=true&w=majority`, function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
