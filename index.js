@@ -24,15 +24,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 
-
-
-
-
-/*
-mongodb://ac-e5fq0pu-shard-00-00.6jvcgd7.mongodb.net:27017,ac-e5fq0pu-shard-00-01.6jvcgd7.mongodb.net:27017,ac-e5fq0pu-shard-00-02.6jvcgd7.mongodb.net:27017/myFirstDatabase?replicaSet=atlas-ds2hgd-shard-0" --ssl --authenticationDatabase admin --username rperlinski --password NjjfC1ylt6RMRA2o
-mongodb+srv://rperlinski:NjjfC1ylt6RMRA2o@atlascluster.6jvcgd7.mongodb.net/?retryWrites=true&w=majority
-*/
-
 // mongodb+srv://rperlinski:<password>@atlascluster.6jvcgd7.mongodb.net/test
 mongoose.connect('mongodb+srv://rperlinski:NjjfC1ylt6RMRA2o@atlascluster.6jvcgd7.mongodb.net/rperlinski?retryWrites=true&w=majority', function(err) {
     if(err) {
