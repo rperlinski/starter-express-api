@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -38,6 +40,7 @@ const jwt_key = process.env.JWT_KEY;
 
 const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
+  username: {type: String},
   password: { type: String, required: true }
 });
 userSchema.plugin(uniqueValidator);
@@ -118,6 +121,7 @@ app.post("/signup", function(req, res, next) {
     .then( hash=> {
       const user = new User({
         email: req.body.email,
+        username: req.body.email,
         password: hash
       });
       user.save()
@@ -129,7 +133,8 @@ app.post("/signup", function(req, res, next) {
         })
         .catch( err => {
           res.status(500).json({
-            message: "Niepoprawne dane do rejestracji."
+            message: "Niepoprawne dane do rejestracji.",
+            err
           });
         });
       });
