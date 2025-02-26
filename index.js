@@ -4,6 +4,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 
+// import OpenAI from "openai";
+const OpenAI = require('openai');
+// const openai = new OpenAI();
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+
+
 app.set('view engine', 'pug');
 app.set('port', (process.env.PORT || 5000));
 
@@ -85,7 +91,7 @@ var UsersAPI = mongoose.model('apiusers', UsersAPISchema);
 var CarsAPISchema = new mongoose.Schema({
   brand: String,
   model: String,
-  year: { type: Number, default: 2022 }
+  year: { type: Number, default: 2025 }
 });
 var CarsAPI = mongoose.model('apicars', CarsAPISchema);
 
@@ -299,6 +305,34 @@ app.delete('/cars/:id', checkAuth, function(req, res, next) {
     res.json(data);
   });
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// OpenAI reoutes
+////////////////////////////////////////////////////////////////////////////////
+
+/* POST /openai */
+app.post('/openai', async function(req, res, next) {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+        { role: "system", content: "You are a helpful assistant." },
+          req.body
+        // {
+        //     role: "user",
+        //     // content: "Write a haiku about recursion in programming.",
+        //     // content: "Tell mi something about the highest mmountin in Solar System.",
+        //     content: "Powiedz mi coś o najwyższym szczycie na Ziemi",
+        // },
+    ],
+    store: true,
+  });
+  // console.log(completion.choices[0].message);
+  // res.json(completion.choices[0].message);
+  res.json(completion.choices);
+  // res.json(completion);
+});
+
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
